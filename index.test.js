@@ -56,6 +56,26 @@ describe('withRest', () => {
     });
 
     it('should do nothing if headers were already sent', async () => {
+        jest.spyOn(console, 'error').mockImplementation();
+
+        const app = withRest({
+            POST: (req, res) => {
+                res.status(201).send({ foo: 'bar' });
+            },
+        });
+
+        await request(enhance(app))
+        .post('/')
+        .expect(201)
+        .expect('Content-Type', /^application\/json/)
+        .then((res) => {
+            expect(res.body).toEqual({ foo: 'bar' });
+        });
+    });
+
+    it('should warn if the response was sent directly in the handler, but a valid JSON value was still returned', async () => {
+        jest.spyOn(console, 'error').mockImplementation();
+
         const app = withRest({
             POST: (req, res) => {
                 res.status(201).send({ foo: 'bar' });
@@ -68,8 +88,9 @@ describe('withRest', () => {
         .post('/')
         .expect(201)
         .expect('Content-Type', /^application\/json/)
-        .then((res) => {
-            expect(res.body).toEqual({ foo: 'bar' });
+        .then(() => {
+            expect(console.error).toHaveBeenCalledTimes(1);
+            expect(console.error.mock.calls[0][0]).toMatch(/Error: You have sent the response inside your handler but/);
         });
     });
 

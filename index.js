@@ -108,6 +108,12 @@ const withRest = (methods, options) => {
 
             // Do nothing if the request is already sent (e.g.: a redirect was issued)
             if (res.headersSent) {
+                if (json !== undefined) {
+                    options.logError(
+                        Boom.internal('You have sent the response inside your handler but still returned something. This error was not sent to the client, however you should probably not return a value in the handler.'), // eslint-disable-line max-len
+                    );
+                }
+
                 return;
             }
 
