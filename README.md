@@ -202,8 +202,6 @@ An object where keys are HTTP methods (uppercase) and values are the handlers wi
 
 Type: `object`
 
-> ℹ️ You may pass any of the supported `react-intl`'s [`<IntlProvider>`](https://github.com/formatjs/react-intl/blob/master/docs/Components.md#intlprovider) props as well, except for `locale` and `messages`.
-
 ##### sendError
 
 Type: `function`   
