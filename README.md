@@ -197,6 +197,16 @@ Handlers may return any valid JSON as per the [RFC7159](https://tools.ietf.org/h
 
 Exceptions thrown within handlers will be caught automatically and sent to the client. You may either throw a [Boom](https://github.com/hapijs/boom) error or a standard error object. If a standard error object is thrown, it will be converted to a Boom error instance automatically (`500`).
 
+In case you throw a Boom error, you may optionally pass the original error inside [`data.originalError`](https://github.com/hapijs/boom/blob/master/API.md#boombadrequestmessage-data), making the default error logger print that error instead of the Boom wrapper (when within thee `5xx` range). In fact, this is already done automatically for you when you throw a standard error object inside handlers. Here's an example:
+
+```js
+try {
+    await deleteProduct();
+} catch (err) {
+    throw Boom.internal('Unable to delete product', { originalError: err });
+}
+```
+
 #### methods
 
 Type: `object`

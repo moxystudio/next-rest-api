@@ -140,7 +140,7 @@ const withRest = (methods, options) => {
         } catch (err) {
             // Not an ApiError? Then wrap it into an ApiError and log it.
             if (!err.isBoom) {
-                err = Boom.internal('foo', err);
+                err = Boom.internal('foo', { originalError: err });
             }
 
             options.logError(err);

@@ -180,12 +180,12 @@ describe('withRest', () => {
         });
     });
 
-    it('should log any 500 errors', async () => {
+    it('should log 500 errors', async () => {
         jest.spyOn(console, 'error').mockImplementation();
 
         const app = withRest({
             GET: () => {
-                throw Boom.internal('foo', { bar: 'baz' });
+                throw Boom.internal('foo');
             },
         });
 
@@ -199,10 +199,29 @@ describe('withRest', () => {
         });
     });
 
-    it('should log original errors if they caused a 500 error', async () => {
+    it('should log original errors if they are within 5xx range', async () => {
         jest.spyOn(console, 'error').mockImplementation();
 
-        const app = withRest({
+        let app;
+
+        app = withRest({
+            GET: () => {
+                throw new Error('foo');
+            },
+        });
+
+        await request(enhance(app))
+        .get('/')
+        .expect(500)
+        .expect('Content-Type', /^application\/json/)
+        .then(() => {
+            expect(console.error).toHaveBeenCalledTimes(1);
+            expect(console.error.mock.calls[0][0]).toMatch('Error: foo');
+        });
+
+        console.error.mockClear();
+
+        app = withRest({
             GET: () => {
                 const originalError = new Error('bar');
 
