@@ -221,7 +221,52 @@ describe('withRest', () => {
     });
 
     describe('options', () => {
+        it('should allow passing a custom sendError', async () => {
+            jest.spyOn(console, 'error').mockImplementation();
 
+            const sendError = jest.fn((res, error) => {
+                res.status(500).send({ errorMessage: error.message });
+            });
+
+            const app = withRest({
+                GET: () => {
+                    throw Boom.internal('foo');
+                },
+            }, { sendError });
+
+            await request(enhance(app))
+            .get('/')
+            .expect(500)
+            .expect('Content-Type', /^application\/json/)
+            .then((res) => {
+                expect(sendError).toHaveBeenCalledTimes(1);
+                expect(res.body).toEqual({ errorMessage: 'foo' });
+            });
+        });
+
+        it('should allow passing a custom logError', async () => {
+            jest.spyOn(console, 'error').mockImplementation();
+
+            const logError = jest.fn((error) => {
+                console.error(`> ${error.message}`);
+            });
+
+            const app = withRest({
+                GET: () => {
+                    throw Boom.internal('foo');
+                },
+            }, { logError });
+
+            await request(enhance(app))
+            .get('/')
+            .expect(500)
+            .expect('Content-Type', /^application\/json/)
+            .then(() => {
+                expect(logError).toHaveBeenCalledTimes(1);
+                expect(console.error).toHaveBeenCalledTimes(1);
+                expect(console.error.mock.calls[0][0]).toMatch('> foo');
+            });
+        });
     });
 });
 

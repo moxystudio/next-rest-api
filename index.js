@@ -70,12 +70,24 @@ const withValidation = (schemas) => (fn) => async (req, res) => {
 };
 
 /**
+ * @typedef {Function} SendError
+ *
+ * @param {object} res - Node.js response object.
+ * @param {Error} err - The Boom error object.
+ */
+/**
+ * @typedef {Function} LogError
+ *
+ * @param {Error} err - The Boom error object.
+ */
+
+/**
  * Matches handlers defined in `methods` against the HTTP method, like `GET` or `POST`.
  *
- * @param {object} methods - An object mapping HTTP methods to their handlers.
+ * @param {object.<string, Function>} methods - An object mapping HTTP methods to their handlers.
  * @param {object} options - The options.
- * @param {Function} options.sendError - A function to send errors back to the client, with the following signature `(res, err) => {}`.
- * @param {Function} options.logError - A function to log errors, with the following signature `(err) => {}`.
+ * @param {SendError} options.sendError - A function to send errors back to the client.
+ * @param {LogError} options.logError - A function to log errors.
  *
  * @returns {Function} The composed HTTP handler.
  *
