@@ -250,9 +250,9 @@ An object with `query`, `body` or `headers` keys and their associated Joi schema
 
 ## How to test your API
 
-To test your API, we recommend using [`supertest`](https://github.com/visionmedia/supertest).
+To create unit tests for your API, we recommend using [`supertest`](https://github.com/visionmedia/supertest). However, we have to inject Next.js middleware and helpers into `req` and `res` ourselves.
 
-However, we have to inject Next.js helpers into `req` and `res` ourselves like so:
+Given the following API endpoint:
 
 ```js
 // pages/api/hello.js
@@ -262,6 +262,8 @@ export default withRest()({
     get: () => 'hello',
 });
 ```
+
+Here's how you could test it:
 
 ```js
 // pages/api/hello.test.js
