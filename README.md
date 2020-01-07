@@ -126,7 +126,6 @@ const getSchema = {
     }),
 };
 
-
 const putSchema = {
     query: Joi.object({
         id: Joi.string().required(),
@@ -222,20 +221,24 @@ Type: `object`
 Type: `function`   
 Default: *see `defaultSendError` in [index.js](index.js)*
 
-A function to send Boom errors back to the client. Has the following signature: `(res, err) => {}`.
+A function responsible to send Boom errors back to the client. Has the following signature: `(res, err) => {}`.
+
+The default implementation uses the `output` property of the Boom error to set the response headers, status code and payload.
 
 ##### logError
 
 Type: `function`   
 Default: *see `defaultLogError` in [index.js](index.js)*
 
-A function to log errors. Has the following signature: `(err) => {}`.
+A function that logs errors. Has the following signature: `(err) => {}`.
+
+The default implementation ignores any non `5xx` and simply prints the error stack to `stderr`. If the error contains `data.originalError`, that error's stack is printed instead.
 
 ### withValidation(schemas)
 
 Wraps a handler with validation against [Joi](https://github.com/hapijs/joi) schemas.
 
-If validation fails, the response will sent back to the client will be `400 Bad Request`.
+If validation fails, a `400 Bad Request` response will be sent back to the client.
 
 #### schemas
 

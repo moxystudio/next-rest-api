@@ -86,8 +86,8 @@ const withValidation = (schemas) => (fn) => async (req, res) => {
  *
  * @param {object.<string, Function>} methods - An object mapping HTTP methods to their handlers.
  * @param {object} options - The options.
- * @param {SendError} options.sendError - A function to send errors back to the client.
- * @param {LogError} options.logError - A function to log errors.
+ * @param {SendError} options.sendError - A function responsible to send Boom errors back to the client.
+ * @param {LogError} options.logError - A function that logs errors.
  *
  * @returns {Function} The composed HTTP handler.
  *
