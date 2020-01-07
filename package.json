@@ -1,0 +1,47 @@
+{
+  "name": "@moxy/next-rest-api",
+  "version": "1.1.4",
+  "description": "Library that makes it easier to develop REST APIs in Next.js",
+  "main": "index.js",
+  "files": [],
+  "scripts": {
+    "lint": "eslint . --ignore-path .gitignore",
+    "test": "jest",
+    "prerelease": "npm t && npm run lint",
+    "release": "standard-version",
+    "postrelease": "git push --follow-tags origin HEAD && npm publish"
+  },
+  "keywords": [
+    "next",
+    "nextjs",
+    "api",
+    "rest",
+    "http"
+  ],
+  "author": "André Cruz <andre@moxy.studio>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:moxystudio/next-rest-api.git"
+  },
+  "peerDependencies": {
+    "next": ">= 9 < 10",
+    "@hapi/boom": ">= 9 < 10",
+    "@hapi/joi": ">= 17 < 18"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
+    "@hapi/boom": "^9.0.0",
+    "@hapi/joi": "^17.0.0",
+    "@moxy/eslint-config": "^9.1.2",
+    "@moxy/jest-config": "^1.1.0",
+    "eslint": "^6.6.0",
+    "husky": "^4.0.0",
+    "jest": "^24.9.0",
+    "lint-staged": "^9.2.5",
+    "next": "^9.1.7",
+    "standard-version": "^7.0.0",
+    "supertest": "^4.0.2"
+  }
+}
