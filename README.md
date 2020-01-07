@@ -14,11 +14,11 @@
 [david-dm-dev-url]:https://david-dm.org/moxystudio/next-rest-api?type=dev
 [david-dm-dev-image]:https://img.shields.io/david/dev/moxystudio/next-rest-api.svg
 
-Library that makes it easier to develop REST APIs in [Next.js](https://nextjs.org/).
+Aims to ease the development of REST APIs in [Next.js](https://nextjs.org/).
 
 ## Motivation
 
-Next.js brought API routes support in v9, but you have to provide your own implementation of handling different HTTP methods, validation, error handling and so on. So in short, this library provides:
+Next.js brought API routes support in v9, but you have to provide your own implementation for handling different HTTP methods, validation, error handling and so on. So in short, this library provides:
 
 - A standard way to detect HTTP methods (GET, POST, PUT, PATCH, DELETE, etc).
 - A standard way to validate the request (headers, query, body).
@@ -28,7 +28,7 @@ Next.js brought API routes support in v9, but you have to provide your own imple
 ## Installation
 
 ```sh
-$ npm install --save @moxy/next-rest-api @hapi/joi @hapi/boom
+$ npm install @moxy/next-rest-api @hapi/joi @hapi/boom
 ```
 
 This library has a peer-dependency on [`@hapi/joi`](https://github.com/hapijs/joi) and [`@hapi/boom`](https://github.com/hapijs/boom) to perform validation and to output errors in a standard format.
