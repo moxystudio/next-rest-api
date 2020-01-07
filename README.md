@@ -191,7 +191,7 @@ export default withRest({
 
 Matches handlers defined in `methods` against the HTTP method, like `get` or `post`.
 
-Handlers may return any valid JSON as per the [RFC7159](https://tools.ietf.org/html/rfc7159), which includes objects, arrays, booleans and null. The return value will be sent automatically as a JSON response.
+Handlers may return any valid JSON as per the [RFC7159](https://tools.ietf.org/html/rfc7159), which includes objects, arrays, booleans and null (undefined is coerced to null). The return value will be sent automatically as a JSON response.
 
 Exceptions thrown within handlers will be caught automatically and sent to the client. You may either throw a [Boom](https://github.com/hapijs/boom) error or a standard error object. If a standard error object is thrown, it will be converted to a Boom error instance automatically (`500`).
 

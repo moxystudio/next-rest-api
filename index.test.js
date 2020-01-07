@@ -43,7 +43,7 @@ describe('withRest', () => {
         });
 
         app = withRest({
-            GET: () => null,
+            GET: () => undefined,
         });
 
         await request(enhance(app))
