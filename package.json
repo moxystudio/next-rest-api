@@ -1,6 +1,6 @@
 {
   "name": "@moxy/next-rest-api",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Aims to ease the development of REST APIs in Next.js",
   "main": "index.js",
   "files": [],
