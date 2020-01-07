@@ -59,6 +59,8 @@ describe('withRest', () => {
         const app = withRest({
             POST: (req, res) => {
                 res.status(201).send({ foo: 'bar' });
+
+                return { hello: 'world' };
             },
         });
 
