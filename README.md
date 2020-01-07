@@ -46,6 +46,8 @@ export default withRest({
     GET: async (req, res) => {
         const products = await listProducts();
 
+        // You may do some post-processing of `products` here...
+
         return products;
     },
 });
