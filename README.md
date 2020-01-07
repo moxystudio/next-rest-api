@@ -18,12 +18,12 @@ Aims to ease the development of REST APIs in [Next.js](https://nextjs.org/).
 
 ## Motivation
 
-Next.js brought API routes support in v9, but you have to provide your own implementation for handling different HTTP methods, validation, error handling and so on. So in short, this library provides:
+Next.js brought API routes support in v9, but you have to provide your own implementation for handling different HTTP methods, validation, error handling and so on. So in short, this library provides a standard way to:
 
-- A standard way to detect HTTP methods (GET, POST, PUT, PATCH, DELETE, etc).
-- A standard way to validate the request (headers, query, body).
-- A standard way to deal with errors, including their responses.
-- A standard way to log errors to `stderr`.
+- Detect HTTP methods (GET, POST, PUT, PATCH, DELETE, etc).
+- Validate the request (headers, query, body).
+- Handle errors, including how their responses look like.
+- Log errors, by printing them to `stderr` by default.
 
 ## Installation
 
@@ -89,11 +89,14 @@ export default withRest({
 });
 ```
 
-ℹ️ You may use [`p-pipe`](https://github.com/sindresorhus/p-pipe) to compose your "middlewares" to be more readable, like so:
+ℹ️ You may use [`p-compose`](https://github.com/JasonPollman/p-compose) to compose your "middlewares" to be more readable, like so:
 
 ```js
+import withRest, { withValidation } from '@moxy/next-rest-api';
+import compose from 'p-compose';
+
 export default withRest({
-    GET: pPipe(
+    GET: compose(
         withValidation(getSchema),
         async (req, res) => {
             const products = await listProducts(req.query);
