@@ -189,7 +189,7 @@ export default withRest({
 
 ### withRest(methods, [options])
 
-Matches handlers defined in `methods` against the HTTP method, like `get` or `post`.
+Matches handlers defined in `methods` against the HTTP method, like `GET` or `POST`.
 
 Handlers may return any valid JSON as per the [RFC7159](https://tools.ietf.org/html/rfc7159), which includes objects, arrays, booleans and null (undefined is coerced to null). The return value will be sent automatically as a JSON response.
 
@@ -199,7 +199,7 @@ Exceptions thrown within handlers will be caught automatically and sent to the c
 
 Type: `object`
 
-An object where keys are HTTP methods (uppercase) and values are the handlers with the signature `async (req, res) => {}`.
+An object mapping HTTP methods to their handlers with the following signature: `async (req, res) => {}`.
 
 #### options
 

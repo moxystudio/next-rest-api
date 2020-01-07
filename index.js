@@ -26,6 +26,30 @@ const defaultSendError = (res, err) => {
     res.status(statusCode).json(payload);
 };
 
+/**
+ * Wraps a HTTP request handler with validation against Joi schemas.
+ *
+ * @param {object} schemas - An object with `query`, `body` or `headers` keys and their associated Joi schemas.
+ *                           Each of these schemas will be matched against the incoming request.
+ *
+ * @returns {Function} The HTTP handler that validates the request.
+ *
+ * @example
+ *
+ * const getSchema = {
+ *   query: Joi.object({
+ *      id: Joi.string().required(),
+ *   }),
+ * };
+ *
+ * export default withRest({
+ *   GET: withValidation(getSchema)(async req, res) => {
+ *     // Do something with `req.query.id`
+ *
+ *     return { foo: 'bar' };
+ *   },
+ * });
+ */
 const withValidation = (schemas) => (fn) => async (req, res) => {
     const joiSchema = Joi.object(schemas).unknown(true);
 
@@ -45,6 +69,26 @@ const withValidation = (schemas) => (fn) => async (req, res) => {
     return fn(req, res);
 };
 
+/**
+ * Matches handlers defined in `methods` against the HTTP method, like `GET` or `POST`.
+ *
+ * @param {object} methods - An object mapping HTTP methods to their handlers.
+ * @param {object} options - The options.
+ * @param {Function} options.sendError - A function to send errors back to the client, with the following signature `(res, err) => {}`.
+ * @param {Function} options.logError - A function to log errors, with the following signature `(err) => {}`.
+ *
+ * @returns {Function} The composed HTTP handler.
+ *
+ * @example
+ *
+ * export default withRest({
+ *   GET: async (req, res) => {
+ *     // Do something...
+ *
+ *     return { foo: 'bar' };
+ *   },
+ * });
+ */
 const withRest = (methods, options) => {
     options = {
         logError: defaultLogError,
