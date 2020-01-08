@@ -267,8 +267,9 @@ Here's how you could test it:
 
 ```js
 // pages/api/hello.test.js
-const { apiResolver } = require('next/dist/next-server/server/api-utils');
-const hello = require('./hello');
+import request from 'supertest';
+import { apiResolver } from 'next/dist/next-server/server/api-utils';
+import hello from './hello';
 
 const enhance = (handler) => (req, res) => apiResolver(req, res, undefined, handler);
 
