@@ -53,7 +53,7 @@ export default withRest({
 });
 ```
 
-## Simple get & post endpoint, with validation:
+### Simple get & post endpoint, with validation:
 
 In `/pages/api/products.js` (or `/pages/api/products/index.js`)
 
