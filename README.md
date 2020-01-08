@@ -127,9 +127,7 @@ const getSchema = {
 };
 
 const putSchema = {
-    query: Joi.object({
-        id: Joi.string().required(),
-    }),
+    query: getSchema.query,
     body: Joi.object({
         name: Joi.string().max(200).required(),
         description: Joi.string().max(2000),
@@ -137,7 +135,9 @@ const putSchema = {
     }),
 };
 
-const deleteSchema = getSchema;
+const deleteSchema = {
+    query: getSchema.query,
+};
 
 export default withRest({
     GET: withValidation(getSchema)(async (req, res) => {
@@ -196,7 +196,9 @@ Handlers may return any valid JSON as per the [RFC7159](https://tools.ietf.org/h
 
 Exceptions thrown within handlers will be caught automatically and sent to the client. You may either throw a [Boom](https://github.com/hapijs/boom) error or a standard error object. If a standard error object is thrown, it will be converted to a Boom error instance automatically (`500`).
 
-In case you throw a Boom error, you may optionally pass the original error inside [`data.originalError`](https://github.com/hapijs/boom/blob/master/API.md#boombadrequestmessage-data), making the default error logger print that error instead of the Boom wrapper (when within the `5xx` range). In fact, this is already done automatically for you when you throw a standard error object inside handlers. Here's an example:
+In case you throw a Boom error, you may optionally pass the original error inside [`data.originalError`](https://github.com/hapijs/boom/blob/master/API.md#boombadrequestmessage-data), making the default error logger print that error instead of the Boom wrapper (when within the `5xx` range). In fact, this is already done automatically for you when you throw a standard error object inside handlers.
+
+Here's an example on how to pass the original error:
 
 ```js
 try {
