@@ -285,6 +285,8 @@ it('should print hello', async () => {
 });
 ```
 
+⚠️ Note: If you want [`supertest`](https://github.com/visionmedia/supertest) to return a promise, you must use `.then()` as mentioned in the example above. Otherwise, it will not return a promise and hence, you can\'t `await` it.
+
 ## Tests
 
 ```sh
