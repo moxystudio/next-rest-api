@@ -34,13 +34,13 @@
     "@commitlint/config-conventional": "^8.1.0",
     "@hapi/boom": "^9.0.0",
     "@hapi/joi": "^17.0.0",
-    "@moxy/eslint-config": "^9.1.2",
-    "@moxy/jest-config": "^1.1.0",
+    "@moxy/eslint-config": "^10.1.1",
+    "@moxy/jest-config": "^2.0.2",
     "eslint": "^6.6.0",
     "husky": "^4.0.0",
-    "jest": "^24.9.0",
-    "lint-staged": "^9.2.5",
-    "next": "^9.1.7",
+    "jest": "^25.1.0",
+    "lint-staged": "^10.0.8",
+    "next": "^9.3.0",
     "standard-version": "^7.0.0",
     "supertest": "^4.0.2"
   }

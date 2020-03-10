@@ -19,12 +19,12 @@ describe('withRest', () => {
         });
 
         await request(enhance(app))
-        .get('/')
-        .expect(200)
-        .expect('Content-Type', /^application\/json/)
-        .then((res) => {
-            expect(res.body).toEqual({ foo: 'bar' });
-        });
+            .get('/')
+            .expect(200)
+            .expect('Content-Type', /^application\/json/)
+            .then((res) => {
+                expect(res.body).toEqual({ foo: 'bar' });
+            });
     });
 
     it('should support nullish responses', async () => {
@@ -35,24 +35,24 @@ describe('withRest', () => {
         });
 
         await request(enhance(app))
-        .get('/')
-        .expect(200)
-        .expect('Content-Type', /^application\/json/)
-        .then((res) => {
-            expect(res.body).toBe(null);
-        });
+            .get('/')
+            .expect(200)
+            .expect('Content-Type', /^application\/json/)
+            .then((res) => {
+                expect(res.body).toBe(null);
+            });
 
         app = withRest({
             GET: () => undefined,
         });
 
         await request(enhance(app))
-        .get('/')
-        .expect(200)
-        .expect('Content-Type', /^application\/json/)
-        .then((res) => {
-            expect(res.body).toBe(null);
-        });
+            .get('/')
+            .expect(200)
+            .expect('Content-Type', /^application\/json/)
+            .then((res) => {
+                expect(res.body).toBe(null);
+            });
     });
 
     it('should do nothing if headers were already sent', async () => {
@@ -65,12 +65,12 @@ describe('withRest', () => {
         });
 
         await request(enhance(app))
-        .post('/')
-        .expect(201)
-        .expect('Content-Type', /^application\/json/)
-        .then((res) => {
-            expect(res.body).toEqual({ foo: 'bar' });
-        });
+            .post('/')
+            .expect(201)
+            .expect('Content-Type', /^application\/json/)
+            .then((res) => {
+                expect(res.body).toEqual({ foo: 'bar' });
+            });
     });
 
     it('should warn if the response was sent directly in the handler, but a valid JSON value was still returned', async () => {
@@ -85,29 +85,29 @@ describe('withRest', () => {
         });
 
         await request(enhance(app))
-        .post('/')
-        .expect(201)
-        .expect('Content-Type', /^application\/json/)
-        .then(() => {
-            expect(console.error).toHaveBeenCalledTimes(1);
-            expect(console.error.mock.calls[0][0]).toMatch(/Error: You have sent the response inside your handler but/);
-        });
+            .post('/')
+            .expect(201)
+            .expect('Content-Type', /^application\/json/)
+            .then(() => {
+                expect(console.error).toHaveBeenCalledTimes(1);
+                expect(console.error.mock.calls[0][0]).toMatch(/Error: You have sent the response inside your handler but/);
+            });
     });
 
     it('should respond with 405 if method is not supported', async () => {
         const app = withRest();
 
         await request(enhance(app))
-        .get('/')
-        .expect(405)
-        .expect('Content-Type', /^application\/json/)
-        .then((res) => {
-            expect(res.body).toEqual({
-                statusCode: 405,
-                error: 'Method Not Allowed',
-                message: 'Method GET is not supported for this endpoint',
+            .get('/')
+            .expect(405)
+            .expect('Content-Type', /^application\/json/)
+            .then((res) => {
+                expect(res.body).toEqual({
+                    statusCode: 405,
+                    error: 'Method Not Allowed',
+                    message: 'Method GET is not supported for this endpoint',
+                });
             });
-        });
     });
 
     it('should respond with 500 if handlers throw standard errors', async () => {
@@ -120,16 +120,16 @@ describe('withRest', () => {
         });
 
         await request(enhance(app))
-        .get('/')
-        .expect(500)
-        .expect('Content-Type', /^application\/json/)
-        .then((res) => {
-            expect(res.body).toEqual({
-                statusCode: 500,
-                error: 'Internal Server Error',
-                message: 'An internal server error occurred',
+            .get('/')
+            .expect(500)
+            .expect('Content-Type', /^application\/json/)
+            .then((res) => {
+                expect(res.body).toEqual({
+                    statusCode: 500,
+                    error: 'Internal Server Error',
+                    message: 'An internal server error occurred',
+                });
             });
-        });
     });
 
     it('should respond correctly if handlers throw Boom errors', async () => {
@@ -142,16 +142,16 @@ describe('withRest', () => {
         });
 
         await request(enhance(app))
-        .get('/')
-        .expect(403)
-        .expect('Content-Type', /^application\/json/)
-        .then((res) => {
-            expect(res.body).toEqual({
-                statusCode: 403,
-                error: 'Forbidden',
-                message: 'foo',
+            .get('/')
+            .expect(403)
+            .expect('Content-Type', /^application\/json/)
+            .then((res) => {
+                expect(res.body).toEqual({
+                    statusCode: 403,
+                    error: 'Forbidden',
+                    message: 'foo',
+                });
             });
-        });
 
         // Case where Boom tells us  to output custom headers
         app = withRest({
@@ -161,23 +161,23 @@ describe('withRest', () => {
         });
 
         await request(enhance(app))
-        .post('/')
-        .send({})
-        .expect(401)
-        .expect('Content-Type', /^application\/json/)
-        .then((res) => {
-            expect(res.headers).toMatchObject({
-                'www-authenticate': 'sample error="Invalid password"',
+            .post('/')
+            .send({})
+            .expect(401)
+            .expect('Content-Type', /^application\/json/)
+            .then((res) => {
+                expect(res.headers).toMatchObject({
+                    'www-authenticate': 'sample error="Invalid password"',
+                });
+                expect(res.body).toEqual({
+                    statusCode: 401,
+                    error: 'Unauthorized',
+                    message: 'Invalid password',
+                    attributes: {
+                        error: 'Invalid password',
+                    },
+                });
             });
-            expect(res.body).toEqual({
-                statusCode: 401,
-                error: 'Unauthorized',
-                message: 'Invalid password',
-                attributes: {
-                    error: 'Invalid password',
-                },
-            });
-        });
     });
 
     it('should log 500 errors', async () => {
@@ -190,13 +190,13 @@ describe('withRest', () => {
         });
 
         await request(enhance(app))
-        .get('/')
-        .expect(500)
-        .expect('Content-Type', /^application\/json/)
-        .then(() => {
-            expect(console.error).toHaveBeenCalledTimes(1);
-            expect(console.error.mock.calls[0][0]).toMatch('Error: foo');
-        });
+            .get('/')
+            .expect(500)
+            .expect('Content-Type', /^application\/json/)
+            .then(() => {
+                expect(console.error).toHaveBeenCalledTimes(1);
+                expect(console.error.mock.calls[0][0]).toMatch('Error: foo');
+            });
     });
 
     it('should log original errors if they are within 5xx range', async () => {
@@ -211,13 +211,13 @@ describe('withRest', () => {
         });
 
         await request(enhance(app))
-        .get('/')
-        .expect(500)
-        .expect('Content-Type', /^application\/json/)
-        .then(() => {
-            expect(console.error).toHaveBeenCalledTimes(1);
-            expect(console.error.mock.calls[0][0]).toMatch('Error: foo');
-        });
+            .get('/')
+            .expect(500)
+            .expect('Content-Type', /^application\/json/)
+            .then(() => {
+                expect(console.error).toHaveBeenCalledTimes(1);
+                expect(console.error.mock.calls[0][0]).toMatch('Error: foo');
+            });
 
         console.error.mockClear();
 
@@ -230,13 +230,13 @@ describe('withRest', () => {
         });
 
         await request(enhance(app))
-        .get('/')
-        .expect(500)
-        .expect('Content-Type', /^application\/json/)
-        .then(() => {
-            expect(console.error).toHaveBeenCalledTimes(1);
-            expect(console.error.mock.calls[0][0]).toMatch('Error: bar');
-        });
+            .get('/')
+            .expect(500)
+            .expect('Content-Type', /^application\/json/)
+            .then(() => {
+                expect(console.error).toHaveBeenCalledTimes(1);
+                expect(console.error.mock.calls[0][0]).toMatch('Error: bar');
+            });
     });
 
     describe('options', () => {
@@ -254,13 +254,13 @@ describe('withRest', () => {
             }, { sendError });
 
             await request(enhance(app))
-            .get('/')
-            .expect(500)
-            .expect('Content-Type', /^application\/json/)
-            .then((res) => {
-                expect(sendError).toHaveBeenCalledTimes(1);
-                expect(res.body).toEqual({ errorMessage: 'foo' });
-            });
+                .get('/')
+                .expect(500)
+                .expect('Content-Type', /^application\/json/)
+                .then((res) => {
+                    expect(sendError).toHaveBeenCalledTimes(1);
+                    expect(res.body).toEqual({ errorMessage: 'foo' });
+                });
         });
 
         it('should allow passing a custom logError', async () => {
@@ -277,14 +277,14 @@ describe('withRest', () => {
             }, { logError });
 
             await request(enhance(app))
-            .get('/')
-            .expect(500)
-            .expect('Content-Type', /^application\/json/)
-            .then(() => {
-                expect(logError).toHaveBeenCalledTimes(1);
-                expect(console.error).toHaveBeenCalledTimes(1);
-                expect(console.error.mock.calls[0][0]).toMatch('> foo');
-            });
+                .get('/')
+                .expect(500)
+                .expect('Content-Type', /^application\/json/)
+                .then(() => {
+                    expect(logError).toHaveBeenCalledTimes(1);
+                    expect(console.error).toHaveBeenCalledTimes(1);
+                    expect(console.error.mock.calls[0][0]).toMatch('> foo');
+                });
         });
     });
 });
@@ -304,17 +304,17 @@ describe('withValidation', () => {
         });
 
         await request(enhance(app))
-        .post('/')
-        .send({})
-        .expect(400)
-        .expect('Content-Type', /^application\/json/)
-        .then((res) => {
-            expect(res.body).toEqual({
-                statusCode: 400,
-                error: 'Bad Request',
-                message: '"body.foo" is required',
+            .post('/')
+            .send({})
+            .expect(400)
+            .expect('Content-Type', /^application\/json/)
+            .then((res) => {
+                expect(res.body).toEqual({
+                    statusCode: 400,
+                    error: 'Bad Request',
+                    message: '"body.foo" is required',
+                });
             });
-        });
     });
 
     it('should validate request query', async () => {
@@ -329,16 +329,16 @@ describe('withValidation', () => {
         });
 
         await request(enhance(app))
-        .get('/')
-        .expect(400)
-        .expect('Content-Type', /^application\/json/)
-        .then((res) => {
-            expect(res.body).toEqual({
-                statusCode: 400,
-                error: 'Bad Request',
-                message: '"query.foo" is required',
+            .get('/')
+            .expect(400)
+            .expect('Content-Type', /^application\/json/)
+            .then((res) => {
+                expect(res.body).toEqual({
+                    statusCode: 400,
+                    error: 'Bad Request',
+                    message: '"query.foo" is required',
+                });
             });
-        });
     });
 
     it('should validate request headers', async () => {
@@ -346,9 +346,9 @@ describe('withValidation', () => {
             headers: Joi.object({
                 'content-type':
                     Joi
-                    .string()
-                    .pattern(/^application\/json\b/)
-                    .required(),
+                        .string()
+                        .pattern(/^application\/json\b/)
+                        .required(),
             }),
         };
 
@@ -357,17 +357,17 @@ describe('withValidation', () => {
         });
 
         await request(enhance(app))
-        .post('/')
-        .send('foo')
-        .set('Content-Type', 'text/plain')
-        .expect(400)
-        .then((res) => {
-            expect(res.body).toEqual({
-                statusCode: 400,
-                error: 'Bad Request',
-                message: '"headers.content-type" with value "text/plain" fails to match the required pattern: /^application\\/json\\b/',
+            .post('/')
+            .send('foo')
+            .set('Content-Type', 'text/plain')
+            .expect(400)
+            .then((res) => {
+                expect(res.body).toEqual({
+                    statusCode: 400,
+                    error: 'Bad Request',
+                    message: '"headers.content-type" with value "text/plain" fails to match the required pattern: /^application\\/json\\b/',
+                });
             });
-        });
     });
 
     it('should copy validation result (normalization)', async () => {
@@ -392,15 +392,15 @@ describe('withValidation', () => {
         });
 
         await request(enhance(app))
-        .post('/')
-        .query({ foo: 'first ' })
-        .send({ foo: 'second ' })
-        .set('X-Foo', 'third ')
-        .expect('Content-Type', /^application\/json/)
-        .then((res) => {
-            expect(res.body.query).toEqual({ foo: 'first' });
-            expect(res.body.body).toEqual({ foo: 'second' });
-            expect(res.body.headers).toMatchObject({ 'x-foo': 'third' });
-        });
+            .post('/')
+            .query({ foo: 'first ' })
+            .send({ foo: 'second ' })
+            .set('X-Foo', 'third ')
+            .expect('Content-Type', /^application\/json/)
+            .then((res) => {
+                expect(res.body.query).toEqual({ foo: 'first' });
+                expect(res.body.body).toEqual({ foo: 'second' });
+                expect(res.body.headers).toMatchObject({ 'x-foo': 'third' });
+            });
     });
 });

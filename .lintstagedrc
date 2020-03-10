@@ -1,6 +1,5 @@
 {
     "*.js": [
-        "eslint",
-        "git add"
+        "eslint"
     ]
 }
