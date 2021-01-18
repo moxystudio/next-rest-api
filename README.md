@@ -28,10 +28,10 @@ Next.js brought API routes support in v9, but you have to provide your own imple
 ## Installation
 
 ```sh
-$ npm install @moxy/next-rest-api @hapi/joi @hapi/boom
+$ npm install @moxy/next-rest-api joi @hapi/boom
 ```
 
-This library has a peer-dependency on [`@hapi/joi`](https://github.com/hapijs/joi) and [`@hapi/boom`](https://github.com/hapijs/boom) to perform validation and to output errors in a standard format.
+This library has a peer-dependency on [`joi`](https://github.com/sideway/joi) and [`@hapi/boom`](https://github.com/hapijs/boom) to perform validation and to output errors in a standard format.
 
 ## Usage
 
@@ -59,7 +59,7 @@ In `/pages/api/products.js` (or `/pages/api/products/index.js`)
 
 ```js
 import withRest, { withValidation } from '@moxy/next-rest-api';
-import Joi from '@hapi/joi';
+import Joi from 'joi';
 import Boom from '@hapi/boom';
 
 const getSchema = {
@@ -117,7 +117,7 @@ In `/pages/api/products/[id].js`
 
 ```js
 import withRest, { withValidation } from '@moxy/next-rest-api';
-import Joi from '@hapi/joi';
+import Joi from 'joi';
 import Boom from '@hapi/boom';
 
 const getSchema = {

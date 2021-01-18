@@ -25,23 +25,24 @@
     "url": "git@github.com:moxystudio/next-rest-api.git"
   },
   "peerDependencies": {
-    "next": ">= 9 < 10",
+    "next": ">= 9 <= 10",
     "@hapi/boom": ">= 9 < 10",
-    "@hapi/joi": ">= 17 < 18"
+    "joi": ">= 17 < 18"
   },
   "devDependencies": {
-    "@commitlint/cli": "^8.1.0",
-    "@commitlint/config-conventional": "^8.1.0",
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "@hapi/boom": "^9.0.0",
-    "@hapi/joi": "^17.0.0",
-    "@moxy/eslint-config": "^10.1.1",
-    "@moxy/jest-config": "^2.0.2",
-    "eslint": "^6.6.0",
-    "husky": "^4.0.0",
-    "jest": "^25.1.0",
-    "lint-staged": "^10.0.8",
-    "next": "^9.3.0",
-    "standard-version": "^8.0.1",
-    "supertest": "^4.0.2"
+    "joi": "^17.3.0",
+    "@moxy/eslint-config-base": "^13.0.3",
+    "@moxy/eslint-config-jest": "^13.0.3",
+    "@moxy/jest-config-base": "^5.0.0",
+    "eslint": "^7.0.0",
+    "husky": "^4.0.10",
+    "jest": "^26.0.0",
+    "lint-staged": "^10.0.0",
+    "next": "^10.0.0",
+    "standard-version": "^9.0.0",
+    "supertest": "^6.1.1"
   }
 }

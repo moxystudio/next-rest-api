@@ -1,12 +1,18 @@
 'use strict';
 
+const { parse: parseUrl } = require('url');
 const request = require('supertest');
 const Boom = require('@hapi/boom');
-const Joi = require('@hapi/joi');
+const Joi = require('joi');
 const { apiResolver } = require('next/dist/next-server/server/api-utils');
 const withRest = require('./');
 
-const enhance = (handler) => (req, res) => apiResolver(req, res, undefined, handler);
+const enhance = (handler) => (req, res) => apiResolver(
+    req,
+    res,
+    parseUrl(req.url, true).query,
+    handler,
+);
 
 beforeEach(() => {
     console.error.mock && console.error.mockRestore();
