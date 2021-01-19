@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/moxystudio/next-rest-api/compare/v1.1.1...v2.0.0) (2021-01-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* change @happy/joi to joi
+
+### Features
+
+* next 10 compat ([930ca0d](https://github.com/moxystudio/next-rest-api/commit/930ca0d7252a393fb714c53550a1e2efd657c4bd))
+
 ### [1.1.1](https://github.com/moxystudio/next-rest-api/compare/v1.1.0...v1.1.1) (2020-01-07)
 
 
