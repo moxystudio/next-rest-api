@@ -74,7 +74,7 @@ const postSchema = {
         name: Joi.string().max(200).required(),
         description: Joi.string().max(2000),
         price: Joi.number().min(0).required(),
-    });
+    }),
 };
 
 export default withRest({
