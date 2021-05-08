@@ -66,7 +66,7 @@ const getSchema = {
     query: Joi.object({
         q: Joi.string(),
         sortBy: Joi.valid('price:asc', 'price:desc'),
-    });
+    }),
 };
 
 const postSchema = {
