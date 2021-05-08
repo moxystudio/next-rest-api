@@ -87,7 +87,7 @@ export default withRest({
         const product = await createProduct(req.body);
 
         return product;
-    },
+    }),
 });
 ```
 
